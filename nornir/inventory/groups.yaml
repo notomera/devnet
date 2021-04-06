@@ -1,0 +1,12 @@
+---
+cs01:
+  hostname: 192.168.1.200
+  username: omera
+  passowrd: Syb3r2g0
+  platform: ios
+  groups:
+    - esh
+  
+  data:
+    site: host1.esh
+    role: spine
