@@ -12,4 +12,4 @@ ansible_become_password: Syb3r2g0
 routers
 
 [routers]
-CRS1 ansible_host = 192.168.12.128
+CSR1 ansible_host = 192.168.12.128
