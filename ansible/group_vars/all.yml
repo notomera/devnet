@@ -1,6 +1,6 @@
-[home_lab]
+#[home_lab]
 
-[home_lab:vars]
+#[home_lab:vars]
 ansible_network_os: ios
 ansible_user: ansible
 ansible_password: ansible
@@ -8,8 +8,8 @@ ansible_become: yes
 ansible_become_method: enable
 ansible_become_password: Syb3r2g0
 
-[home_lab:children]
-routers
+#[home_lab:children]
+#routers
 
-[routers]
-CSR1 ansible_host = 192.168.12.128
+#[routers]
+#CSR1 ansible_host = 192.168.12.128
