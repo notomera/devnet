@@ -1,7 +1,8 @@
+---
 ansible_network_os: ios
 ansible_user: ansible
 ansible_password: ansible
 ansible_become: yes
 ansible_become_method: enable
 ansible_become_password: Syb3r2g0
-
+...
