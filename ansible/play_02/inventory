@@ -1,0 +1,9 @@
+[ios]
+
+[ios:children]
+routers
+switches
+
+[routers]
+CSR1
+CSR2
