@@ -1,0 +1,16 @@
+---
+
+- name: Network facts
+  connection: ansible.netcommon.network_cli
+  gather_facts: false
+  hosts: routers
+  
+  tasks:
+    - name: get config
+      cisco.ios.ios_facts:
+        gather_subset: all
+      
+    
+    - name: display the config
+      debug:
+        msg: 'the hostname is {{ ansible_net_hostname }} and the os is {{ ansible_net_version }}'
