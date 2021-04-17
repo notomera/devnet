@@ -7,7 +7,7 @@ core_01
 
 [ios_devices:children]
 ios_routers
-ios_Switches
+ios_switches
 
 [routers:children]
 ios_routers

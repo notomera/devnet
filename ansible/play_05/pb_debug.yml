@@ -6,11 +6,11 @@
 
     - name: Run for the edge nodes only
       debug:
-        msg: "Router name is {{ hostname }}"
-      when: "'edge' is in group_names"
+        msg: "Router name is {{ inventory_hostname }}"
+      when: "'ios_routers' is in group_names"
     
     - name: Run for core only
       debug: 
-        msg: "{{ hostname }} is running {{ os }}"
+        msg: "{{ inventory_hostname }} is running {{ ansible_network_os }}"
       when: 
         - inventory_hostname == 'core_01'
