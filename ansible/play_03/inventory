@@ -1,9 +1,11 @@
-[ios]
-
-[ios:children]
-routers
-switches
-
 [routers]
+
+[routers:children]
+eigrp_routers
+eigrp_named_routers
+
+[eigrp_routers]
 CSR1
+
+[eigrp_named_routers]
 CSR2
