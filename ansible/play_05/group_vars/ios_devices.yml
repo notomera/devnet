@@ -3,7 +3,8 @@ ansible_network_os: ios
 ansible_become: yes
 ansible_become_method: enable
 ansible_become_password: ansible
-snmp_server:
+snmp_servers:
   - 192.168.1.10
   - 192.168.1.11
-  
+users:
+  ansible: ansible

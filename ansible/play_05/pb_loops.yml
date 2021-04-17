@@ -7,9 +7,10 @@
     - name: Loop over SNMP servers
       debug:
         msg: "Router {{ inventory_hostname }} with SNMP server {{ item }} "
-      loop: {{ snmp_servers }}
+      loop: "{{ snmp_servers }}"
     
     - name: loop over users
       debug:
         msg: "router {{ inventory_hostname }} with user {{ item.key }} password {{ item.value }}"
-        with_dict: {{ users }}
+      with_dict: 
+        - "{{ users }}"
