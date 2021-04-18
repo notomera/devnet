@@ -5,13 +5,14 @@
   connection: network_cli
   hosts: ios_devices
   tasks:
-
-    - name: configre edge_01 wan interfaces
+    - name: change interface status
       ios_interfaces:
         config:
         - name: ethernet0/0
           description: "WAN Primary IF"
           enabled: yes
+      when: inventory_hostname == "edge_01"
+    - name: change interface IP     
       cisco.ios.ios_l3_interfaces:
         config:
           - name: ethernet0/0
