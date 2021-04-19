@@ -2,3 +2,24 @@
 ansible_host: 192.168.1.200
 ansible_user: ansible
 ansible_password: ansible
+
+interfaces:
+  - name: ethernet 0/0
+    description: "ISP_01 IF PRIMARY"
+    ipv4:
+      - address: 10.0.0.2/24
+    state: merged
+    enabled: true
+
+  - name: ethernet 0/1
+    description: "CORE_SW IF PRIMARY"
+    ipv4:
+      - address: 192.168.100.1/24
+      state: merged
+      enabled: true
+
+routes:
+  static:
+    - name: "ISP_01 GW"
+      destination: 1.1.1.1/32
+      next_hops: 10.0.0.1
