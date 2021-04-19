@@ -8,3 +8,6 @@ snmp_servers:
   - 192.168.1.11
 users:
   ansible: ansible
+
+ansible_user: ansible
+ansible_password: ansible

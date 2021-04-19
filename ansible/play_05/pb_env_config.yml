@@ -20,23 +20,26 @@
             - address: {{ item.ipv4.address }}
       loop: " {{ interfaces }}"
 
-    - name: assign vlans to interfaces
+    - name: configure access port
       ios_l2_interfaces:
         config:
         - name: {{ item.name }}
           mode: {{ item.mode }}
-          {%- if item.mode == "access" -%}
-            access:
-              vlan: {{ item.vlan_id }}
-          {%- else -%}
-            trunk:
-              allowed_vlans: {{ item.allowed_vlans }}
-              native_vlan: {{ item.native_vlan }}
-              encapsulation: {{ item.encapsulation }}
-          {%- end -%}
+          access:
+           vlan: {{ item.vlan_id }}
+      loop: {{ vlans }}
+      when: {{ item.mode }} == "access" & "'ios_switches' in group_names"
+
+    - name: configure trunk port
+      ios_l2_interfaces:
+        config:
+          trunk:
+            allowed_vlans: {{ item.allowed_vlans }}
+            native_vlan: {{ item.native_vlan }}
+            encapsulation: {{ item.encapsulation }}
         state: merged
       loop: {{ vlans }}
-      when: "'ios_switches' in group_names"
+      when: {{ item.mode }} == 'trunk' & "'ios_switches' in group_names"
 
 
     - name: configre routing
