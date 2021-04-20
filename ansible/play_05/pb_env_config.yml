@@ -27,8 +27,8 @@
           mode: {{ item.mode }}
           access:
            vlan: {{ item.vlan_id }}
-      loop: {{ vlans }}
-      when: {{ item.mode }} == "access" & "'ios_switches' in group_names"
+      loop: {{ vlans | selectattr('mode', 'equalto', 'access') }}
+      when: "'ios_switches' in group_names"
 
     - name: configure trunk port
       ios_l2_interfaces:
@@ -38,15 +38,14 @@
             native_vlan: {{ item.native_vlan }}
             encapsulation: {{ item.encapsulation }}
         state: merged
-      loop: {{ vlans }}
-      when: {{ item.mode }} == 'trunk' & "'ios_switches' in group_names"
-
+      loop: {{ vlans | selectattr('mode', 'equalto', 'trunk')}}
+      when: "'ios_switches' in group_names"
 
     - name: configre routing
       ios_static_routes:
         config:
         - address_family:
-          - afi: ipv4
+          - afi: {{ item.address_family }}
             routes: 
               - dst: {{ item.destination }}
                 next_hops:
