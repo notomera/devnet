@@ -1,6 +1,6 @@
 ---
 - name: configure envirnonment interfaces
-  gather_facts: no
+  gather_facts: yes
   connection: network_cli
   hosts: ios_devices
   tasks:
@@ -17,8 +17,8 @@
         config:
         - name: "{{ item.name }}"
           ipv4: 
-            - address: "{{ item.ipv4.address }}"
-      loop: " {{ interfaces }}"
+          - address: "{{ item.ipv4 }}"
+      loop: "{{ interfaces }}"
 
     - name: configure access port
       ios_l2_interfaces:
@@ -42,14 +42,19 @@
       when: "'ios_switches' in group_names"
 
     - name: configre routing
-      ios_static_routes:
+      cisco.ios.ios_static_routes:
         config:
-        - address_family:
+        - address_families:
           - afi: "{{ item.address_family }}"
             routes: 
-              - dst: "{{ item.destination }}"
+              - dest: "{{ item.destination }}"
                 next_hops:
-                - forward_router_address: "{{ item.next_hops }}"
-                  name: "{{ item.name }}"
+                  - forward_router_address: "{{ item.next_hops }}"
+      #              name: "{{ item.name }}" #Not supported with IOS XE
+     #               when: ansible_net_image == "IOS XR"
       loop: "{{ routes.static }}"
-      when: "'ios_routers' in group_names"
+      when: "'ios_routers' in group_names and routes is defined"
+
+    - name: 
+      debug:
+        msg: "{{ ansible_net_image }}"
