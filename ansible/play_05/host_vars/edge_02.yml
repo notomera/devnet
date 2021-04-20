@@ -13,5 +13,5 @@ interfaces:
     description: "CORE_SW IF PRIMARY"
     ipv4:
       - address: 192.168.100.2/24
-      state: merged
-      enabled: true
+    state: merged
+    enabled: true
