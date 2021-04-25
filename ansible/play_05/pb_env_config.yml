@@ -17,7 +17,7 @@
         config:
         - name: "{{ item.name }}"
           ipv4: 
-          - address: "{{ item.ipv4 }}"
+          - address: "{{ item.ipv4 }}" # THE ADDRESS IS WRITTEN IN CIDR NOTATION
       loop: "{{ interfaces }}"
 
     - name: configure access port
@@ -27,6 +27,7 @@
           mode: "{{ item.mode }}"
           access:
             vlan: "{{ item.vlan_id }}"
+          register: vlan_output
       loop: "{{ vlans | selectattr('mode', 'equalto', 'access') }}"
       when: "'ios_switches' in group_names"
 
@@ -34,8 +35,8 @@
       ios_l2_interfaces:
         config:
           trunk:
-            allowed_vlans: "{{ item.allowed_vlans }}"
-            native_vlan: "{{ item.native_vlan }}"
+            allowed_vlans: "{{ item.allowed_vlans }}" # A LIST OF VLANS SEPERATED BY A COMMA
+            native_vlan: "{{ item.native_vlan }}" 
             encapsulation: "{{ item.encapsulation }}"
         state: merged
       loop: "{{ vlans | selectattr('mode', 'equalto', 'trunk')}}"
@@ -45,9 +46,9 @@
       cisco.ios.ios_static_routes:
         config:
         - address_families:
-          - afi: "{{ item.address_family }}"
+          - afi: "{{ item.address_family }}" # THIS IS THE IP VERSION 4/6 (IPV4/IPV6)
             routes: 
-              - dest: "{{ item.destination }}"
+              - dest: "{{ item.destination }}" 
                 next_hops:
                   - forward_router_address: "{{ item.next_hops }}"
       #              name: "{{ item.name }}" #Not supported with IOS XE
@@ -58,3 +59,5 @@
     - name: 
       debug:
         msg: "{{ ansible_net_image }}"
+        var: vlan_output.stdout
+        msg: "{{ vlan_output.stdout }}"
