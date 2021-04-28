@@ -11,6 +11,7 @@
           description: "{{ item.description }}"
           enabled: "{{ item.enabled }}"
       loop: "{{ interfaces }}"
+      when: "interfaces is defined"
 
     - name: change interface IP     
       cisco.ios.ios_l3_interfaces:
@@ -19,6 +20,7 @@
           ipv4: 
           - address: "{{ item.ipv4 }}" # THE ADDRESS IS WRITTEN IN CIDR NOTATION
       loop: "{{ interfaces }}"
+      when: "interfaces is defined"
 
     - name: configure access port
       ios_l2_interfaces:
@@ -27,7 +29,7 @@
           mode: "{{ item.mode }}"
           access:
             vlan: "{{ item.vlan_id }}"
-          register: vlan_output
+      register: vlan_output
       loop: "{{ vlans | selectattr('mode', 'equalto', 'access') }}"
       when: "'ios_switches' in group_names"
 
@@ -56,8 +58,13 @@
       loop: "{{ routes.static }}"
       when: "'ios_routers' in group_names and routes is defined"
 
-    - name: 
+    - name: print ansible image  
       debug:
         msg: "{{ ansible_net_image }}"
-        var: vlan_output.stdout
-        msg: "{{ vlan_output.stdout }}"
+
+    - name: Display VLANS
+      debug:
+        #msg: "The first device {{ inventory_hostname }} has the following vlans {{ item.stdout }}"
+        #msg: "{{ vlan_output }}"
+      #loop: "{{ vlan_output | map(attribute = 'results') | list | selectattr('item, 'equalto' ')}}"
+      when: "'switches' in group_names"
