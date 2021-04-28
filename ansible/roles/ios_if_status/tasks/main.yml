@@ -1,2 +1,12 @@
 ---
-# tasks file for ios_if_status
+
+# THIS TASK WILL CHANGE THE IF STATUS ADMIN IP/DOWN
+
+- name: Changing Interface Status (UP/DOWN)
+  ios_interfaces:
+    config:
+      - name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        enabled: "{{ item.enabled }}"
+        notify: IFstatus
+  loop: "{{ interfaces }}"

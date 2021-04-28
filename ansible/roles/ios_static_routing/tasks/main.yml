@@ -1,2 +1,16 @@
 ---
-# tasks file for ios_static_routing
+# THIS TASK IS CONFIGURING A STATIC ROUTE ON ANY L3 CISCOS DEVICE
+
+- name: configre routing
+  cisco.ios.ios_static_routes:
+    config:
+    - address_families:
+      - afi: "{{ item.address_family }}"
+        routes: 
+          - dest: "{{ item.destination }}"
+            next_hops:
+              - forward_router_address: "{{ item.next_hops }}"
+  #              name: "{{ item.name }}" #Not supported with IOS XE
+  #               when: ansible_net_image == "IOS XR"
+  loop: "{{ routes.static }}"
+  when: "'ios_routers' in group_names and routes is defined

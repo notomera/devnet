@@ -1,2 +1,23 @@
 ---
-# tasks file for ios_l2_if
+# THIS TASK IS CONFIGURING THE SWITCHPORT WITH THE DESIRED VLANS
+
+- name: configure access port
+  ios_l2_interfaces:
+    config:
+    - name: "{{ item.name }}"
+      mode: "{{ item.mode }}"
+      access:
+        vlan: "{{ item.vlan_id }}"
+  loop: "{{ vlans | selectattr('mode', 'equalto', 'access') }}"
+  when: "'ios_switches' in group_names"
+
+- name: configure trunk port
+  ios_l2_interfaces:
+    config:
+      trunk:
+        allowed_vlans: "{{ item.allowed_vlans }}"
+        native_vlan: "{{ item.native_vlan }}"
+        encapsulation: "{{ item.encapsulation }}"
+    state: merged
+  loop: "{{ vlans | selectattr('mode', 'equalto', 'trunk')}}"
+  when: "'ios_switches' in group_names"

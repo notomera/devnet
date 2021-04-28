@@ -1,2 +1,10 @@
 ---
-# tasks file for ios_l3_if
+# THIS TASK IS CONFIGURING AN IPV4/6 ADDRESS ON A L3 INTERFACE
+
+- name: change interface IP     
+  cisco.ios.ios_l3_interfaces:
+    config:
+    - name: "{{ item.name }}"
+      ipv4: 
+      - address: "{{ item.ipv4 }}"
+  loop: "{{ interfaces }}"
