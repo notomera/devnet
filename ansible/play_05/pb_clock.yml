@@ -1,0 +1,28 @@
+---
+- name: clock
+  hosts: all
+  connection: network_cli
+  tasks:
+
+    - name: show clock
+      ios_command: 
+        commands: "show clock"
+      register: ios_clock
+
+    - name: show version
+      ios_command:
+        commands: "show version"
+      register: ios_version
+
+    - name: show output
+      debug:
+        msg: "{{ ios_clock }}"
+        #- msg: "{{ ios_versions }}"
+
+    - name: take backup
+      ios_config:
+        backup: yes
+        backup_options:
+          dir_path: "./backup/"
+          filename: "{{ inventory_hostname }}.yml"
+

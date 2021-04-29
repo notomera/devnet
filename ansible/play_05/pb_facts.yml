@@ -1,0 +1,27 @@
+---
+- name: This playbook gathers IOS facts
+  gather_facts: yes
+  hosts: all
+  connection: network_cli
+  tasks:
+
+    - name: gather ios facts
+      ios_facts:
+      register: device_facts
+      
+ #   - name: print the output
+ #     debug: 
+ #       var: device_facts
+
+    - name: VIEW ALL ANSIBLE FACT KEYS
+      debug:
+        var: ansible_facts.key()
+
+    - name: VIEW HOSTNAME
+      debug:
+        var: ansible_net_hostname
+
+    - name: VIEW OS VERSION
+      debug:
+        var: ansible_net_version
+
