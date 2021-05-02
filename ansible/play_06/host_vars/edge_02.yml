@@ -1,0 +1,15 @@
+---
+ansible_host: 192.168.1.201
+
+interfaces:
+  - name: ethernet 0/0
+    description: "ISP_01 IF PRIMARY"
+    ipv4: 10.0.1.2/24
+    state: merged
+    enabled: true
+
+  - name: ethernet 0/1
+    description: "CORE_SW IF PRIMARY"
+    ipv4: 192.168.100.2/24
+    state: merged
+    enabled: true
