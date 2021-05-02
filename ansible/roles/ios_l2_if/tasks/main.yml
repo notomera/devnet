@@ -8,6 +8,7 @@
       mode: "{{ item.mode }}"
       access:
         vlan: "{{ item.vlan_id }}"
+  notify: IFstatus
   loop: "{{ vlans | selectattr('mode', 'equalto', 'access') }}"
   when: "'ios_switches' in group_names"
 
@@ -19,5 +20,8 @@
         native_vlan: "{{ item.native_vlan }}"
         encapsulation: "{{ item.encapsulation }}"
     state: merged
+  notify: IFstatus
   loop: "{{ vlans | selectattr('mode', 'equalto', 'trunk')}}"
   when: "'ios_switches' in group_names"
+
+

@@ -1,20 +1,10 @@
 ---
-
 - name: INFRASTRUCTURE CONFIGURATION
   connection: network_cli
   gather_facts: no
   hosts: ios_devices
-
-  tasks:
-
-    - name: SET IF IP ADDRESS
-      roles:
-        - ioos_l3_if
     
-    - name: SET STATIC ROUTER
-      roles: 
-        - ios_static_routing
-    
-    - name: SET IF L2 STATUS
-      roles:
-        - ios_l2_if
+  roles:
+    - ios_l3_if 
+    - ios_static_routing
+    - ios_l2_if

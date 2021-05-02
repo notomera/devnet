@@ -13,4 +13,4 @@
   #              name: "{{ item.name }}" #Not supported with IOS XE
   #               when: ansible_net_image == "IOS XR"
   loop: "{{ routes.static }}"
-  when: "'ios_routers' in group_names and routes is defined
+  when: "'ios_routers' in group_names and routes is defined"
