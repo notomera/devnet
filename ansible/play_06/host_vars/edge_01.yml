@@ -6,7 +6,7 @@ ansible_password: ansible
 interfaces:
   - name: ethernet 0/0
     description: "ISP_01 IF PRIMARY"  #The discription on the interface
-    ipv4: 10.0.0.2/24
+    ipv4: 10.0.0.20/24
     state: merged
     enabled: true
 
