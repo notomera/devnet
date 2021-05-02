@@ -7,6 +7,6 @@
       - name: "{{ item.name }}"
         description: "{{ item.description }}"
         enabled: "{{ item.enabled }}"
-  loop: "{{ interfaces }}"
-  when: 
-    - "interfaces is defined"
+  #loop: "{{ interfaces }}"
+  #when: 
+  #  - "interfaces is defined"

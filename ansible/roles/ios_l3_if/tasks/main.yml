@@ -10,4 +10,4 @@
   notify: IFstatus
   loop: "{{ interfaces }}"
   when: 
-    - "interfaces.ipv4 is defined"
+    - "interfaces | selectattr('ipv4', 'equalto', defined)"
