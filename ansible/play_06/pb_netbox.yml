@@ -1,0 +1,13 @@
+---
+- name: List of hosts in the cluster
+  connection: local
+  tasks:
+    uri:
+      url: "http://192.168.12.128/api/dcim/devices"
+      method: GET
+      return_content: yes
+      headers:
+        Accept: application/json
+        Authorization: Token {{ netbox_token }}
+      register: nb_hosts
+      deligate_to: localhost

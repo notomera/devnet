@@ -1,0 +1,17 @@
+---
+netbox_url: https://localhost
+netbox_token: b9b782a631b321b8a1a22f96ef2a1fc341b7f218
+
+sites:
+  - name: EA-DC
+    descirption: "Main Data Center in Dubai"
+    location: Dubai
+
+  - name: AUH-DC
+    description: "Main Data Center in Abu Dhabi"
+    location: "Abu Dhabi"
+
+  - name: ECS-DC
+    description: "Main Data Center in Ajman"
+    location: "Ajman"
+    
