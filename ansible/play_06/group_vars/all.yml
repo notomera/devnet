@@ -1,6 +1,6 @@
 ---
-netbox_url: https://localhost
-netbox_token: b9b782a631b321b8a1a22f96ef2a1fc341b7f218
+netbox_url: https://127.0.0.1
+netbox_token: "83d69707c339da787fdb1f9cd186ae9bad7efc17"
 
 sites:
   - name: EA-DC
