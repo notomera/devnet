@@ -2,6 +2,9 @@
 ansible_host: 192.168.1.200
 ansible_user: ansible
 ansible_password: ansible
+site: EA-DC
+role: EDGE
+model: ISR4431
 
 interfaces:
   - name: ethernet 0/0

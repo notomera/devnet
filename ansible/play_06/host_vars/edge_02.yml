@@ -1,5 +1,8 @@
 ---
 ansible_host: 192.168.1.201
+site: EA-DC
+role: EDGE
+model: ISR4431
 
 interfaces:
   - name: ethernet 0/0

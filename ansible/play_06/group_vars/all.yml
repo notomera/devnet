@@ -1,10 +1,10 @@
 ---
-netbox_url: https://127.0.0.1
-netbox_token: "83d69707c339da787fdb1f9cd186ae9bad7efc17"
+netbox_url: http://192.168.12.128:8000
+netbox_token: "0123456789abcdef0123456789abcdef01234567"
 
 sites:
   - name: EA-DC
-    descirption: "Main Data Center in Dubai"
+    description: "Main Data Center in Dubai"
     location: Dubai
 
   - name: AUH-DC
@@ -14,4 +14,49 @@ sites:
   - name: ECS-DC
     description: "Main Data Center in Ajman"
     location: "Ajman"
+
+vendors:
+  - name: Cisco
+  - name: Juniper
+  - name: Palo Alto
+  - name: Fortinet
+  - name: Citrix
+
+models:
+  - name: C9300
+    manufacturer: Cisco
+  - name: CSR1000v
+    manufacturer: Cisco
+  - name: ISR4431
+    manufacturer: Cisco
+
+roles:
+  - name: EDGE
+    description: "This device represent the entry point for the premise"
+    color: 	f44336
+    state: present
+
+  - name: CORE
+    description: "This device provides connectivity between different LANs or subnetworks"
+    color: 	2196f3
+    state: present
+
+  - name: DISTREUTION
+    description: "This device provides an interconnection between the access and core layer"
+    color: 	4caf50
+    state: present
+
+  - name: ACCESS
+    description: "This device facilitates the connection of end node devices to the network"
+    color: 	ffeb3b
+    state: present
+  
+  - name: SPINE
+    description: "Spine devices interconnect all leaf devices in a full-mesh topology"
+    color: 111111
     
+  - name: LEAF
+    description: "The leaf layer consists of access devices that aggregate traffic from servers and connect directly into the spine or network core"
+    color: 9e9e9e
+
+

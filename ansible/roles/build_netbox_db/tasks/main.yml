@@ -11,3 +11,57 @@
   loop: "{{ sites }}" 
   run_once: yes 
   tags: netbox_sites
+
+
+- name: Create NetBox Device Vendors
+  netbox.netbox.netbox_manufacturer:
+    netbox_token: "{{ netbox_token }}"
+    netbox_url: "{{ netbox_url }}" 
+    data:
+      name: "{{ item.name }}"
+  loop: "{{ vendors }}"
+  run_once: yes
+  tags: device_vendors
+
+
+- name: Create NetBox Device Model
+  netbox.netbox.netbox_device_type:
+    netbox_token: "{{ netbox_token }}"
+    netbox_url: "{{ netbox_url }}" 
+    data:
+      model: "{{ item.name }}"
+      slug: "{{ item.slug | default(omit) }}"
+      manufacturer: "{{ item.manufacturer | default('undefined')}}"
+  loop: "{{ models }}"
+  run_once: yes
+  tags: device_model
+
+
+- name: Create NetBox Device Role
+  netbox.netbox.netbox_device_role:
+    netbox_token: "{{ netbox_token }}"
+    netbox_url: "{{ netbox_url }}" 
+    data:
+      name: "{{ item.name }}"
+      color: "{{ item.color | lower }}"
+      description: "{{ item.description }}"
+      slug: "{{ item.slug | default(omit) }}"
+      vm_role: "{{ item.vm_role | default('no') }}"
+  loop: "{{ roles }}"
+  run_once: yes
+  tags: device_role
+
+- name: Provision NetBox Devices
+  netbox.netbox.netbox_device:
+    netbox_token: "{{ netbox_token }}"
+    netbox_url: "{{ netbox_url }}"
+    data:
+      name: "{{ item }}"
+      device_role: "{{ hostvars[item].role }}"
+      device_type: "{{ hostvars[item].model }}"
+      status: Active
+      site: "{{ hostvars[item].site }}"  # alternative method using devices hostname "{{ inventory_hostname.split('-')[0] }}"
+    #state: "{{ netbox_state }}"
+  loop: "{{ groups['all'] }}"
+  register: netbox_device
+  tags: netbox_devices

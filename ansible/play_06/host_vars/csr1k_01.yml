@@ -2,6 +2,9 @@
 ansible_host: 192.168.12.210
 ansible_user: ansible
 ansible_password: ansible
+site: AUH-DC
+role: DISTREUTION
+model: CSR1000v
 
 # interfaces:
 #   - name: ethernet 0/0
