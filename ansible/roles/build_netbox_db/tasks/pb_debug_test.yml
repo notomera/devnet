@@ -1,0 +1,4 @@
+- name: print interfaces and their data
+  debug:
+    msg: "hostvars[item]['name']"
+  loop: "{{ item.interfaces }}"

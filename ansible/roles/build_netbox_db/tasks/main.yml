@@ -1,6 +1,7 @@
 ---
+
 - name: Create Netbox Sites
-  netbox_site:
+  netbox.netbox.netbox_site:
     netbox_token: "{{ netbox_token }}"
     netbox_url: "{{ netbox_url }}" 
     data: 
@@ -10,6 +11,7 @@
     state: "{{ netbox_state }}" 
   loop: "{{ sites }}" 
   run_once: yes 
+  delegate_to: localhost
   tags: netbox_sites
 
 
@@ -21,6 +23,7 @@
       name: "{{ item.name }}"
   loop: "{{ vendors }}"
   run_once: yes
+  delegate_to: localhost
   tags: device_vendors
 
 
@@ -34,6 +37,7 @@
       manufacturer: "{{ item.manufacturer | default('undefined')}}"
   loop: "{{ models }}"
   run_once: yes
+  delegate_to: localhost
   tags: device_model
 
 
@@ -49,6 +53,7 @@
       vm_role: "{{ item.vm_role | default('no') }}"
   loop: "{{ roles }}"
   run_once: yes
+  delegate_to: localhost
   tags: device_role
 
 - name: Provision NetBox Devices
@@ -61,7 +66,57 @@
       device_type: "{{ hostvars[item].model }}"
       status: Active
       site: "{{ hostvars[item].site }}"  # alternative method using devices hostname "{{ inventory_hostname.split('-')[0] }}"
-    #state: "{{ netbox_state }}"
   loop: "{{ groups['all'] }}"
   register: netbox_device
+  delegate_to: localhost
   tags: netbox_devices
+
+- name: Create Netbox Devices Interfaces
+  netbox.netbox.netbox_device_interface:
+    netbox_token: "{{ netbox_token }}"
+    netbox_url: "{{ netbox_url }}"
+    data:
+      device: "{{ inventory_hostname }}"
+      name: "{{ item.name }}"
+      description: "{{ item.description }}"
+      mode: "{{ item.mode | default(omit) }}"
+      type: 
+          "{{ 'virtual' if (item.name.split()[0]) == 'vlan' 
+          else '100base-tx' if  (item.name.split()[0]) == 'ethernet' 
+          else '100base-tx' if (item.name.split()[0]) == 'fastethernet' 
+          else '1000base-t' if (item.name.split()[0]) == 'gigethernet'
+          else '10Gbase-t' }}"
+    state: present
+  loop: "{{ interfaces }}" 
+  delegate_to: localhost
+  tags: netbox_interfaces
+
+
+- name: Create Netbox Interfaces IP
+  netbox.netbox.netbox_ip_address:
+    netbox_token: "{{ netbox_token }}"
+    netbox_url: "{{ netbox_url }}"
+    data:
+      address: "{{ item.ipv4.split('/')[0] }}"
+      # prefix: "{{ item.ipv4 | ansible.netcommon.ipaddr('network/prefix') }}" | input 192.168.1.1/24 -> output 192.168.1.0/24
+      description: "{{ item.description }}"
+      assigned_object: 
+        device: "{{ inventory_hostname }}"
+        name: "{{ item.name }}"
+  loop: "{{ interfaces }}"
+  delegate_to: localhost
+  tags: netbox_if_ip
+
+
+- name: Create Netbox Prefixes
+  netbox.netbox.netbox_prefix:
+    netbox_token: "{{ netbox_token }}"
+    netbox_url: "{{ netbox_url }}"
+    data: 
+      prefix: "{{ item.prefix }}"
+      site: "{{ item.site }}"
+      description: "{{ item.name }}"
+  loop: "{{ prefixes }}"
+  delegate_to: localhost
+  run_once: yes
+  tags: netbox_prefixes

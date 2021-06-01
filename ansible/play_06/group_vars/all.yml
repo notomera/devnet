@@ -59,4 +59,26 @@ roles:
     description: "The leaf layer consists of access devices that aggregate traffic from servers and connect directly into the spine or network core"
     color: 9e9e9e
 
+prefixes:
+  - name: Core-Edge Layer Addressing
+    prefix: 192.168.100.0/24
+    site: 'EA-DC'
 
+  - name: Sales Vlan Subent
+    prefix: 172.30.1.0/24
+    site: 'EA-DC'
+
+  - name: IT Vlan Subent
+    prefix: 172.31.1.0/24
+    site: 'EA-DC'
+
+  - name: ISP_01 Subnet
+    prefix: 10.0.1.0/24
+    site: 'EA-DC'
+
+  - name: ISP_02 Subent
+    prefix: 10.0.0.0/24
+    site: 'EA-DC'
+
+
+  

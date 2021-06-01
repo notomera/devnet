@@ -1,0 +1,20 @@
+---
+- name: CONDETIONAL TEST
+  hosts: all
+  gather_facts: no
+  vars: 
+    ip_address: '192.168.1.1/24'
+  #   value_1: 'this is the ethernet chosen'
+  #   value_2: 'this is the vlan chosen'
+  #   value_3: 'this is the fastethernet chosen'
+  tasks:
+
+  - name: test the condetion
+    debug:
+
+      msg: "{{ item.ipv4 | ansible.netcommon.ipaddr('network/prefix') }}"
+    loop: "{{ interfaces }}"
+  - name: test cond
+    debug:
+      msg: "{{ item.ipv4.split('/')[0] }}"
+    loop: "{{ interfaces }}"

@@ -6,22 +6,22 @@ site: AUH-DC
 role: DISTREUTION
 model: CSR1000v
 
-# interfaces:
-#   - name: ethernet 0/0
-#     description: "ISP_01 IF PRIMARY"  #The discription on the interface
-#     ipv4: 10.0.0.2/24
-#     state: merged
-#     enabled: true
+interfaces:
+  - name: ethernet 0/0
+    description: "ISP_01 IF PRIMARY"  #The discription on the interface
+    ipv4: 10.0.0.2/24
+    state: merged
+    enabled: true
 
-#   - name: ethernet 0/1
-#     description: "CORE_SW IF PRIMARY" #The discription on the interface
-#     ipv4: 192.168.100.1/24
-#     state: merged
-#     enabled: true
+  - name: ethernet 0/1
+    description: "CORE_SW IF PRIMARY" #The discription on the interface
+    ipv4: 192.168.100.1/24
+    state: merged
+    enabled: true
 
-# routes:
-#   static:
-#     - name: "ISP_01 GW"   # The description on the interface
-#       address_family: "ipv4"  #address family ipv4/ipv6
-#       destination: 1.1.1.1/32 
-#       next_hops: 10.0.0.1
+routes:
+  static:
+    - name: "ISP_01 GW"   # The description on the interface
+      address_family: "ipv4"  #address family ipv4/ipv6
+      destination: 1.1.1.1/32 
+      next_hops: 10.0.0.1
