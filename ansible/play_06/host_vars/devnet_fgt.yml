@@ -1,0 +1,8 @@
+---
+ansible_host: 192.168.1.133
+vdom: "root"
+ansible_httpapi_use_ssl: no
+ansible_httpapi_validate_certs: no
+ansible_httpapi_port: 80
+access_token: "3d4ydQtb0dcyr3wQgHrGQ3wNHjy19j"
+ansible_network_os: fortinet.fortios.fortios

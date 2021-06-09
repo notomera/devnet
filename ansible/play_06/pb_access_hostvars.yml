@@ -3,6 +3,6 @@
   tasks:
     - name: iterate
       debug:
-         msg: "{{ hostvars[item].role }}"#"{{ item }}:{{ hostvars[item].role }}"
+         msg: "{{ hostvars[item].role }}" #"{{ item }}:{{ hostvars[item].role }}"
       with_items:
         - "{{ groups['all'] }}"

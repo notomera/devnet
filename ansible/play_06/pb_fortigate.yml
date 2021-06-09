@@ -1,0 +1,37 @@
+---
+- name: THIS IS A TEST FOR FORTIGATE API
+  hosts: devnet_fgt
+  #collections: fortinet.fortios
+  connection: httpapi
+  
+  tasks:
+    - name: Configure IPv4 Policies
+      fortinet.fortios.fortios_firewall_policy:
+        state: "present"
+        access_token: "{{ access_token }}"
+        firewall_policy:
+          policyid: "120"
+          action: "accept"
+          schedule: "always"
+          srcaddr:
+            - name: "10.1.72.11/32"
+          srcintf:
+            - name: "port1"
+          dstaddr:
+            - name: "10.1.71.11/32"
+          dstintf:
+            - name: "port2"
+          service:
+            - name: "ALL"
+          fsso: "disable"
+
+    - name: Configure Firewall Objects
+      fortinet.fortios.fortios_firewall_address:
+        state: "present"
+        access_token: "{{ access_token }}"
+        firewall_address:
+          name:  "10.1.1.1/32"
+          subnet: "10.1.1.1/32"
+          #subnet_name: "10.1.1.1/32"
+      tags: firewall_address
+

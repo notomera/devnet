@@ -6,6 +6,9 @@ csr1k_01
 [ios_switches]
 core_01
 
+[fortios_firewall]
+devnet_fgt
+
 [ios_devices:children]
 ios_routers
 ios_switches
@@ -16,7 +19,11 @@ ios_routers
 [switches:children]
 ios_switches
 
+[firewalls:children]
+fortios_firewall
+
 [network:children]
 routers
 switches
+firewalls
 
